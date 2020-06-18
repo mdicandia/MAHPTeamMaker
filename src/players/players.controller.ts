@@ -1,28 +1,29 @@
-import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch, Delete, Req, Res } from '@nestjs/common';
 import { PlayersService } from './players.service';
 
 @Controller('players')
 export class PlayersController{
     constructor(private readonly playersService: PlayersService) {}
-    
+   
     @Post()
-    addPlayer(
-        @Body('name') name: string,
-        @Body('position') position: string,
-        @Body('oskills') oskills: number,
-        @Body('dskills') dskills: number,
-        @Body('pskills') pskills: number,
-        @Body('sskills') sskills: number,
-        @Body('bskills') bskills: number,
-        @Body('rskills') rskills: number
-    ) {
-       const id = this.playersService.insertPlayer(name, position, oskills,dskills, pskills, sskills, bskills, rskills);
-        return {id: id};
-    
+    async addPlayer(
+    @Body('name') name: string,
+    @Body('position') position: string,
+    @Body('oskills') oskills: number,
+    @Body('dskills') dskills: number,
+    @Body('pskills') pskills: number,
+    @Body('sskills') sskills: number,
+    @Body('bskills') bskills: number,
+    @Body('rskills') rskills: number
+    ) {    
+    const id = await this.playersService.insertPlayer(name, position, oskills,dskills, pskills, sskills, bskills, rskills);
+    return {id: id};
     }
+
     @Get()
-    getAllPlayers() {
-        return this.playersService.fetchPlayers();
+    async getAllPlayers() {
+        const players = await this.playersService.fetchPlayers();
+        return players;
     }
     @Get(':id')
     getPlayer(@Param('id') playerid: string) {
@@ -30,7 +31,7 @@ export class PlayersController{
     }
 
     @Patch(':id')
-    updateProduct(
+    async updateProduct(
         @Param('id') playerid: string,  
         @Body('name') name: string,
         @Body('position') position: string,
@@ -41,7 +42,12 @@ export class PlayersController{
         @Body('bskills') bskills: number,
         @Body('rskills') rskills: number
         ) {
-
-
+            await this.playersService.updatePlayer(playerid, name, position, oskills,dskills, pskills, sskills, bskills, rskills);
         }
+
+    @Delete(':id')
+    removeProduct(@Param('id') playerId: string) {
+        this.playersService.deletePlayer(playerId);
+        return null;
+    }
 }
