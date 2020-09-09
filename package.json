@@ -26,6 +26,7 @@
     "@nestjs/mongoose": "^7.0.2",
     "@nestjs/platform-express": "^7.3.2",
     "ahp": "^2.2.2",
+    "ahp-lite": "^1.2.1",
     "mongoose": "^5.9.25",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

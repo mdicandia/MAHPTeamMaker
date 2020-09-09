@@ -11,8 +11,8 @@ export class PlayersService {
     constructor(
         @InjectModel('Player') private readonly playerModel: Model<Player>) {};
 
-    async insertPlayer(name: string,position: string, oskills: number, dskills: number, pskills:number, sskills:number, bskills:number, rskills:number) {
-        const newPlayer = new this.playerModel({ name: name, position: position, oskills: oskills, dskills: dskills, pskills: pskills, sskills: sskills, bskills: bskills, rskills: rskills });
+    async insertPlayer(name: string,position: string,  pskills:number, sskills:number, bskills:number, rskills:number, ptskills:number, stskills:number) {
+        const newPlayer = new this.playerModel({ name: name, position: position, pskills: pskills, sskills: sskills, bskills: bskills, rskills: rskills, ptskills: ptskills, stskills: stskills});
         const result  = await newPlayer.save();
         console.log(result);
         return result.id as string;
@@ -24,28 +24,22 @@ export class PlayersService {
             id: pl.id,
             name: pl.name,
             position: pl.position,
-            oskills: pl.oskills,
-            dskills: pl.dskills,
             pskills: pl.pskills,
             sskills: pl.sskills,
             bskills: pl.bskills,
-            rskills: pl.rskills
+            rskills: pl.rskills,
+            ptskills: pl.ptskills,
+            stskills: pl.stskills
          }));
     }
 
     async getSinglePlayer(playerid: string) {
         const player = await this.findPlayer(playerid);
-        return {id: player.id, name: player.name, position: player.position, oskills: player.oskills, dskills: player.dskills, pskills: player.pskills, sskills: player.sskills, bskills: player.bskills, rskills: player.rskills};
+        return {id: player.id, name: player.name, position: player.position,  pskills: player.pskills, sskills: player.sskills, bskills: player.bskills, rskills: player.rskills};
     }
 
-    async updatePlayer(playerId: string,name: string,position: string, oskills: number, dskills: number, pskills:number, sskills:number, bskills:number, rskills:number) {
+    async updatePlayer(playerId: string,name: string,position: string, pskills:number, sskills:number, bskills:number, rskills:number) {
         const player = await this.findPlayer(playerId);
-        if (oskills) {
-            player.oskills = oskills;
-        }
-        if (dskills) {
-            player.dskills = dskills;
-        }
         if (pskills) {
             player.pskills = pskills;
         }

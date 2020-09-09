@@ -14,9 +14,11 @@ export class PlayersController{
     @Body('pskills') pskills: number,
     @Body('sskills') sskills: number,
     @Body('bskills') bskills: number,
-    @Body('rskills') rskills: number
+    @Body('rskills') rskills: number,
+    @Body('stskills') stskills: number,
+    @Body('ptskills') ptskills: number
     ) {    
-    const id = await this.playersService.insertPlayer(name, position, oskills,dskills, pskills, sskills, bskills, rskills);
+    const id = await this.playersService.insertPlayer(name, position, pskills, sskills, bskills, rskills, ptskills, stskills);
     return {id: id};
     }
 
@@ -35,14 +37,12 @@ export class PlayersController{
         @Param('id') playerid: string,  
         @Body('name') name: string,
         @Body('position') position: string,
-        @Body('oskills') oskills: number,
-        @Body('dskills') dskills: number,
         @Body('pskills') pskills: number,
         @Body('sskills') sskills: number,
         @Body('bskills') bskills: number,
         @Body('rskills') rskills: number
         ) {
-            await this.playersService.updatePlayer(playerid, name, position, oskills,dskills, pskills, sskills, bskills, rskills);
+            await this.playersService.updatePlayer(playerid, name, position, pskills, sskills, bskills, rskills);
         }
 
     @Delete(':id')
